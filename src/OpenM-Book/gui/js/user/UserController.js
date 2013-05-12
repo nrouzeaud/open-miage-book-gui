@@ -66,13 +66,22 @@ function OpenM_Book_UserButtonModificationController(user,pageControler, inModif
         
     var controller = this;
     this.gui.click = function(e){
-        //alert('TODO : tous les champs en modification')
-      /*  controller.inModification = (!controller.inModification);
+        controller.inModification = (!controller.inModification);
         controller.page.fields.updateInModification(controller.inModification);
         controller.gui.inModification = controller.inModification;
-        controller.gui.content();*/
-        e.preventDefault();
-    }    
+        controller.gui.content();
+        if (e) {e.preventDefault();}
+    }      
+    this.gui.clickSave = function(e){
+       var val ="";
+       for(var i= 0; i < controller.page.fields.fields.length; i++)
+       {
+           val = controller.page.fields.fields[i].gui.getValue();
+           alert("Nouvelle valeur : " + val);    
+       }
+       
+       controller.gui.click();
+    }
 }
 
 function OpenM_Book_UserFieldsController(user){

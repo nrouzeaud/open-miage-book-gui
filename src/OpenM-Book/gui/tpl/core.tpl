@@ -42,10 +42,10 @@
                     OpenM_Book_PagesGui.divParentId = "divParent";
                     OpenM_Book_PagesGui.divJSON = "divJSON";
                       
-                    var me = new OpenM_Book_UserExchangeObject();
+                   /* var me = new OpenM_Book_UserExchangeObject();
                     var data   = JSON.parse('{/literal}{$me}{literal}');
                     OpenM_Book_UserDAO.parseAndLoad(data, me);
-                    OpenM_Book_UserDAO.me = me; 
+                    OpenM_Book_UserDAO.me = me; */
     
                     OpenM_MenuGUI.menuId = "menuDesktop";
                     OpenM_MenuGUI.menuMobileId = "menuMobile";                        
@@ -54,7 +54,7 @@
                     OpenM_IDLoginClient.api_selected = "{/literal}{$OpenM_ID_proxy.api_selected}{literal}";
                     var isConnected = OpenM_IDLoginClient.isConnected(true);
                     if(isConnected){
-                        //OpenM_Book_UserDAO.initMe();
+                        OpenM_Book_UserDAO.initMe();
                         OpenM_MenuGUI.init();
                         OpenM_URLController.load();
                     }

@@ -6,74 +6,80 @@ function OpenM_Book_UserPageGUI(){
     this.div = undefined;
     
     this.display = function(enabled){
-         cadre = $("#"+OpenM_Book_PagesGui.divParentId);
+        cadre = $("#"+OpenM_Book_PagesGui.divParentId);
          
-         if(enabled===true || enabled === undefined){             
+        if(enabled===true || enabled === undefined){             
                 
-                cadre.empty();
-                cadre.addClass("row-fluid");
-              //  this.div = $(document.createElement('div')).addClass("row-fluid");
-              //  cadre.append(this.div);
+            cadre.empty();
+            cadre.addClass("row-fluid");
+            //  this.div = $(document.createElement('div')).addClass("row-fluid");
+            //  cadre.append(this.div);
 
-                var span10 = $(document.createElement('div')).addClass("span10");
-                var span2 = $(document.createElement('div')).addClass("span2");
-                cadre.append(span10);
-                cadre.append(span2);
+            var span10 = $(document.createElement('div')).addClass("span10");
+            var span2 = $(document.createElement('div')).addClass("span2");
+            cadre.append(span10);
+            cadre.append(span2);
                 
                 
-                span2.append(this.buttonModification.content());
+            span2.append(this.buttonModification.content());
                 
-                span10.append(this.fields.content());
-               //span10.append(this.fieldFirstName.content());
-                //span10.append(this.fieldLastName.content());
+            span10.append(this.fields.content());
+        //span10.append(this.fieldFirstName.content());
+        //span10.append(this.fieldLastName.content());
                 
                 
-         }else{
-             cadre.empty();  
-         }  
+        }else{
+            cadre.empty();  
+        }  
     }    
 }
 
 function OpenM_Book_UserButtonModificationGui(inModification){
     this.text = "Modifier";
+    this.textSave = "Savegarder";
     this.style = 'btn-info btn-large btn-space';
+    this.styleSave = 'btn-success btn-large';
     this.iconColor = "icon-white";
+    this.iconColorSave =  "icon-white";
     this.iconStyle = "icon-pencil";
+    this.iconStyleSave = "icon-ok";
+    this.c = $(document.createElement('div'));
     this.a = $(document.createElement('a'));
     this.aSave = $(document.createElement('a'));
     this.click = undefined;
     this.clickSave = undefined;
-    this.styleSave = 'btn-info btn-large';
-    this.iconColorSave =  "icon-white";
-    this.iconStyleSave = "icon-ok";
+
     this.inModification = inModification;
      
-     this.content = function(){
-         this.a.empty()
-               .addClass("btn "+this.style);                              
-         var icon = $(document.createElement("i"))
-                    .addClass(this.iconColor + " " + this.iconStyle);
-         this.a.append(icon)
-               .append('&nbsp;'+this.text)
-               .click(this.click)
-               .removeClass("active");
-        this.aSave.empty().hide();   
+    this.content = function(){
+        this.c.empty();
+        this.a = $(document.createElement('a'));
+        this.a.addClass("btn "+this.style);                              
+        var icon = $(document.createElement("i"))
+        .addClass(this.iconColor + " " + this.iconStyle);
+        this.a.append(icon)
+        .append('&nbsp;'+this.text)
+        .click(this.click)
+        .removeClass("active");          
+        this.c.append(this.a);
         
         if(this.inModification){
             this.a.addClass('active');
-            this.aSave.addClass("btn "+this.style);
+            this.aSave = $(document.createElement('a'));
+            this.aSave.addClass("btn "+this.styleSave);
             var icon = $(document.createElement("i"))
-                    .addClass(this.iconColorSave + " " + this.iconStyleSave);
+            .addClass(this.iconColorSave + " " + this.iconStyleSave);
             this.aSave.append(icon)
-               .append('&nbsp;'+this.text)
-               .click(this.clickSave);
+            .append('&nbsp;'+this.textSave)
+            .click(this.clickSave);
             
+            this.c.append(this.aSave);
             
         }
         
         
-        return this.a;
-     }     
+        return this.c;
+    }     
 }
 
 function OpenM_Book_UserFieldsGui(){
@@ -127,21 +133,21 @@ function OpenM_Book_UserFieldGui(user, field, inModification){
         }else{
             //modif
             this.c.empty();
-           // this.c = $(document.createElement("div"));
+            // this.c = $(document.createElement("div"));
             this.c.addClass("span2");
             this.c.addClass("user-field");
             this.c.addClass("control-group");
             var label = $(document.createElement("label")).addClass("control-label");
             label.attr("for",this.fieldName)
-                .text(this.fieldName);
+            .text(this.fieldName);
             this.c.append(label);
             var div = $(document.createElement("div")).addClass("controls");
             this.input = $(document.createElement("input"))
-                         .attr("id",this.fieldName)
-                         .attr("type","text")
-                         .attr("placeholder",this.fieldName)
-                         .val(this.fieldValue)
-                         .addClass("input-small");
+            .attr("id",this.fieldName)
+            .attr("type","text")
+            .attr("placeholder",this.fieldName)
+            .val(this.fieldValue)
+            .addClass("input-small");
             div.append(this.input);
             this.c.append(div);
             
@@ -149,7 +155,14 @@ function OpenM_Book_UserFieldGui(user, field, inModification){
             //this.c.append(div);
             return this.c;
         }
-        
-        
     }
+        
+    this.getValue = function(){
+        var val = "";
+        if (this.input){
+            val = this.input.val();
+            this.fieldValue = val;
+        }
+        return val;
+    }    
 }
