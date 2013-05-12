@@ -17,7 +17,7 @@ var OpenM_Book_PagesGui = {
         if(!this.divJSONInitialized){
             this.divJSONInitialized = true;
             var div2 = $(document.createElement('div'));
-            div.append(div2);
+            div.append(div2);  
             div2.text("Le retour JSON : ");
             div2.append('<br>');
             var pre = $(document.createElement('pre'));
