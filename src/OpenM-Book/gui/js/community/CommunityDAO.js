@@ -216,11 +216,27 @@ var OpenM_Book_CommunityDAO = {
                    }
                }               
             });
-        }
-        
-        
+        } 
     },
-    
+    'validateUser':function(userId,communityId){
+        var community = this.allCommunities[communityId];
+        var user = OpenM_Book_UserDAO.allUsers[userId];
+        if(community){
+            OpenM_Book.validateUser(userId,communityId,function(data){
+               if (data[OpenM_Book.RETURN_STATUS_PARAMETER] == OpenM_Book.RETURN_STATUS_OK_VALUE){
+                   
+                   OpenM_Book_PagesGui.showSucces("La demande de validation à été prise en compte");
+               }else{
+                  //error
+                   if (data.hasOwnProperty(OpenM_Book.RETURN_ERROR_PARAMETER)){ 
+                        OpenM_Book_PagesGui.showError(data[OpenM_Book.RETURN_ERROR_MESSAGE_PARAMETER]);
+                    }else{
+                        OpenM_Book_PagesGui.showError("une erreur inattendue s'est produite. Impossible de valider l'utilisateur (id : "+ user.id +") pour la communauté (id: "+community.id+") :(");
+                    }  
+               }               
+            });
+        }
+    },
     'parseAndLoad': function(data, community){
         OpenM_Book_PagesGui.showJSON(data);
         if (data[OpenM_Book.RETURN_STATUS_PARAMETER] == OpenM_Book.RETURN_STATUS_OK_VALUE){
@@ -259,7 +275,7 @@ var OpenM_Book_CommunityDAO = {
             community.loaded = true;
             community.update();
         }else{
-            if (data[OpenM_Book.RETURN_ERROR_PARAMETER]){
+            if (data.hasOwnProperty(OpenM_Book.RETURN_ERROR_PARAMETER)){ 
                 OpenM_Book_PagesGui.showError(data[OpenM_Book.RETURN_ERROR_MESSAGE_PARAMETER]);
             }else{
                 OpenM_Book_PagesGui.showError("une erreur inattendue s'est produite. Impossible de chager les données d'une communauté (id: "+community.id+") :(");
@@ -303,7 +319,7 @@ var OpenM_Book_CommunityDAO = {
                 community.childs[k].ancestorsLoaded = true;
             }
         }else{
-            if (data[OpenM_Book.RETURN_ERROR_PARAMETER]){
+             if (data.hasOwnProperty(OpenM_Book.RETURN_ERROR_PARAMETER)){ 
                 OpenM_Book_PagesGui.showError(data[OpenM_Book.RETURN_ERROR_MESSAGE_PARAMETER]);
             }else{
                 OpenM_Book_PagesGui.showError("une erreur inattendue s'est produite. Impossible de chager les données des ancetres d'une communauté (id: "+community.id+") :(");
@@ -335,6 +351,9 @@ var OpenM_Book_CommunityDAO = {
                     community.users[u.id] = u;
             }
             community.updateUsers();
+        }else{
+            //ERROR 
+            //@todo
         }
     },
     'parseUsersNotValid': function(data, community){
@@ -358,12 +377,16 @@ var OpenM_Book_CommunityDAO = {
                     communityTemp = new OpenM_Book_CommunityExchangeObject();
                     communityTemp.id = communityId;
                     communityTemp.name = u[OpenM_Book.RETURN_COMMUNITY_NAME_PARAMETER];
+                    OpenM_Book_CommunityDAO.allCommunities[communityTemp.id] =communityTemp ;
                 }
                 if(community.usersNotValidTree[user.id]===undefined)
                     community.usersNotValidTree[user.id] = new Array();
                 community.usersNotValidTree[user.id][communityTemp.id] = communityTemp;             
             }
             community.updateUsersNotValid();
+        }else{
+            //ERROR
+            //@todo
         }
     }
 }

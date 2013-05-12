@@ -198,11 +198,10 @@ function OpenM_Book_CommunityUsersNotValidController(community){
     }
     
     var controller = this;
-    this.update = function(){
-        controller.updateUsers();
-    }
     
-    this.community.addUpdateUsersNotValidCallBack(this.update);    
+    this.community.addUpdateUsersNotValidCallBack(function(){
+        controller.updateUsers();
+    });
     this.updateUsers();
 }
 
@@ -218,19 +217,19 @@ function OpenM_Book_CommunityUserNotValidController(user, community){
     var controler = this;
 
     this.gui.click = function(){
-        alert('click to user ! ');
         OpenM_URLController.clickToUser(controler.user);
-    }
-   
+    }   
     this.buttonValidate.gui.click = function(e){
-        alert(controler.user.name);
+       // alert(controler.user.name);
+      //  controler.user.
+        OpenM_Book_CommunityDAO.validateUser(controler.user.id, controler.community.id);
+        
         
         e.preventDefault();
     }
-    this.buttonDisplayProfil.gui.click = function(e){
-        alert('On visite le profil de : '+controler.user.name);
-        e.preventDefault();
-    }    
+    this.buttonDisplayProfil.gui.click = function(){
+        OpenM_URLController.clickToUser(controler.user);
+    }
 }
 
 function OpenM_Book_ButtonValidateUserController(user){
@@ -333,8 +332,7 @@ function OpenM_Book_CommunityButtonRenameController(community){
     this.popover.gui.submit = function(e){        
         var name = controler.popover.gui.getName();
         if (name){
-            alert('en attante de la méthode DAO');
-            //OpenM_Book_CommunityDAO.addCommunity(name, controler.community.id);
+            alert('en attante de la méthode DAO');            
             controler.gui.a.popover('hide');
         }else
             alert("Il manque le nouveau nom de la communauté");
