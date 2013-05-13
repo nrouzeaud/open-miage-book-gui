@@ -43,7 +43,7 @@ class OpenM_RegistrationView extends OpenM_BookView {
     const SMARTY_REGISTER_KEYS_ARRAY = "register_form";
 
     public function _default() {
-        $this->login();
+        $this->register();
     }
 //    
 //    public function login() {
@@ -57,8 +57,20 @@ class OpenM_RegistrationView extends OpenM_BookView {
 
     public function register() {
 
-        $this->isConnected();
-
+        
+    
+        
+       
+        
+        
+        
+        $this->sso_book->login(array(OpenM_ID::EMAIL_PARAMETER));
+     
+        if ($this->isRegistered(false)){
+             OpenM_Header::redirect(OpenM_URLViewController::getRoot()); 
+        }
+        
+        
         $error = FALSE;
         $param = HashtableString::from($_POST);
         if ($param->containsKey("submit")) {
@@ -105,7 +117,7 @@ class OpenM_RegistrationView extends OpenM_BookView {
                     /**
                      * @todo faire code, récupération ID de la propriété email, ici property_id = 2 en dur
                      */
-                    $clientBook->addPropertyValue(2, ($param->get(self::EMAIL)));
+                    $clientBook->addPropertyValue(2, $mail);
 
                     $me = $clientBook->getUserProperties();
                     OpenM_SessionController::set(self::MY_DATA, $me);

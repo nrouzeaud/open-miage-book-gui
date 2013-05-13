@@ -61,6 +61,46 @@ class OpenM_ErrorView extends OpenM_BookView {
     public function display404() {
         $this->error("La page que vous tenter d'acceder n'existe pas. (URL : " . "http://".$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"] . ")", 404);
     }
+    
+    
+    protected function addNavBarItems() {
+        $this->smarty->assign("nav_bar", array(        
+            array(
+                "label" => "Info",
+                "items" => array(
+                    array(
+                        "label" => "Open-MIAGE",
+                        "link" => "http://www.open-miage.org",
+                        "blank" => true
+                    ),
+                    array(
+                        "label" => "Team Open-MIAGE",
+                        "link" => "http://www.open-miage.org/team.html",
+                        "blank" => true
+                    )
+            )),
+            array(
+                "label" => "Social",
+                "items" => array(
+                    array(
+                        "label" => "FaceBook",
+                        "link" => "https://www.facebook.com/OpenMIAGE",
+                        "blank" => false
+                    ),
+                    array(
+                        "label" => "Google+",
+                        "link" => "https://plus.google.com/u/0/110647730531285167406",
+                        "blank" => true
+                    ),
+                    array(
+                        "label" => "Twitter",
+                        "link" => "https://twitter.com/OpenMiage",
+                        "blank" => true
+                    )
+                )
+            )
+        ));
+    }
 
 }
 
