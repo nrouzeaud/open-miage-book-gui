@@ -28,6 +28,9 @@ class OpenM_CoreView extends OpenM_BookView {
     }
 
     public function view() {
+        
+        OpenM_Log::debug("try to view a Page", __CLASS__, __METHOD__, __LINE__);
+        
         $this->sso_book->login(array(OpenM_ID::EMAIL_PARAMETER));
         $me = $this->isRegistered();
         $this->smarty->assign("me", OpenM_MapConvertor::mapToJSON($me));

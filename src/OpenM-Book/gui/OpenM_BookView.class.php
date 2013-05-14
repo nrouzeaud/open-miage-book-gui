@@ -78,17 +78,21 @@ abstract class OpenM_BookView extends OpenM_ServiceViewSSO {
      * @param type $retirectToRegistered
      */
     protected function isRegistered($retirectToRegistered = true) {
+        OpenM_Log::debug("Check if Registred", __CLASS__, __METHOD__, __LINE__);
         try {
             $me = $this->userClient->getUserProperties();
             OpenM_Log::debug("User conected, and registred", __CLASS__, __METHOD__, __LINE__);
             return $me;
         } catch (Exception $e) {
+            $message = "Une errueur viens d'etre déclanché : " . $e->getMessage();
+            OpenM_Log::debug($message, __CLASS__, __METHOD__, __LINE__);
             if ($retirectToRegistered === true)
                 OpenM_Header::redirect(OpenM_URLViewController::from(OpenM_RegistrationView::getClass(), OpenM_RegistrationView::REGISTER_FORM)->getURL());            
-            $message = "Une errueur interne viens d'etre déclanché.<br> Message : " . $e->getMessage();
-            OpenM_Log::debug($message, __CLASS__, __METHOD__, __LINE__);
-            $errorView = new OpenM_ErrorView();
-            $errorView->error($message);
+            
+            return FALSE;
+            //$message = "Une errueur interne viens d'etre déclanché.<br> Message : " . $e->getMessage();
+            //$errorView = new OpenM_ErrorView();
+            //$errorView->error($message);
         }
     }
 

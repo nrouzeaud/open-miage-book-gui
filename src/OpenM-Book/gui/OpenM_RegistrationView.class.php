@@ -56,13 +56,7 @@ class OpenM_RegistrationView extends OpenM_BookView {
 //    }
 
     public function register() {
-
-        
-    
-        
-       
-        
-        
+        OpenM_Log::debug("Try to Register", __CLASS__, __METHOD__, __LINE__);
         
         $this->sso_book->login(array(OpenM_ID::EMAIL_PARAMETER));
      
@@ -113,14 +107,16 @@ class OpenM_RegistrationView extends OpenM_BookView {
             if (!$error) {
                 $clientBook = new OpenM_ServiceSSOClientImpl($this->sso_book, "OpenM_Book_User");
                 try {
-                    $clientBook->registerMe($param->get(self::FIRST_NAME), $param->get(self::LAST_NAME), $time);
-                    /**
+                     $this->userClient->registerMe($param->get(self::FIRST_NAME), $param->get(self::LAST_NAME), $time);
+                     OpenM_Log::debug("un user viens de s enregistrer", __CLASS__, __METHOD__, __LINE__);
+                     
+                     /**
                      * @todo faire code, récupération ID de la propriété email, ici property_id = 2 en dur
                      */
-                    $clientBook->addPropertyValue(2, $mail);
-
-                    $me = $clientBook->getUserProperties();
-                    OpenM_SessionController::set(self::MY_DATA, $me);
+                //    $this->userClient->addPropertyValue(2, $mail);
+                //    OpenM_Log::debug("user viens d ajouter son mail", __CLASS__, __METHOD__, __LINE__);
+               //     $me = $clientBook->getUserProperties();
+               //     OpenM_SessionController::set(self::MY_DATA, $me);
 
                     //le message du succes d'enregistrement
                     $this->setAlert("Nous vous conseillons de mettre à jours vos informations", "Succès de l'enregistrement", self::ALERT_TYPE_DISPLAY_SUCCES);

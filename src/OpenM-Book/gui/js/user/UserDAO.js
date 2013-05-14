@@ -36,7 +36,7 @@ var OpenM_Book_UserDAO = {
     'me': undefined,
     'allUsers': new Array(),
     'get': function(userId, synchro, reload){
-        var user;
+        var user=undefined;
         user = this.allUsers[userId];  
         if(!user){
             user = new OpenM_Book_UserExchangeObject();
@@ -72,7 +72,7 @@ var OpenM_Book_UserDAO = {
             if (data[OpenM_Book.RETURN_ERROR_PARAMETER]){
                 OpenM_Book_PagesGui.showError(data[OpenM_Book.RETURN_ERROR_MESSAGE_PARAMETER]);
             }else{
-                OpenM_Book_PagesGui.showError("une erreur inattendue s'est produite. Impossible de chager les données d'une communauté (id: "+community.id+") :(");
+                OpenM_Book_PagesGui.showError("une erreur inattendue s'est produite. Impossible de chager les données de l'utilisateur (id: "+user.id+") :(");
             }  
              
         } 
