@@ -4,6 +4,12 @@
             <button type="button" class="close">x</button>
         {if $alert_title}<h4>{$alert_title}</h4>{/if}
             {$alert}
-        </div>    
+        </div> 
+        <script>
+            {literal} window.onload = function (){
+                    $('.close').click(function() {$('.alert').hide('slow'); });
+                };
+            {/literal}
+         </script>   
     {/if}
 </div>

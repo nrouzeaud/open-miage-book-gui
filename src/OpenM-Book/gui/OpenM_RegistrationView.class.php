@@ -122,7 +122,7 @@ class OpenM_RegistrationView extends OpenM_BookView {
                     $this->setAlert("Nous vous conseillons de mettre à jours vos informations", "Succès de l'enregistrement", self::ALERT_TYPE_DISPLAY_SUCCES);
 
                     //tous c'est bien passé, on redirige vers le profil
-                    OpenM_Header::redirect(OpenM_URLViewController::from(OpenM_ProfileView::getClass())->getURL());
+                    OpenM_Header::redirect(OpenM_URLViewController::from(OpenM_CoreView::getClass())->getURL());
                 } catch (Exception $e) {
                     $error = TRUE;
                     $error_message = $e->getMessage();
